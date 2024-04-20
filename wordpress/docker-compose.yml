@@ -52,7 +52,7 @@ services:
     # -- email: preferred email for registrtion and recovery
     # -- agree-tos: agree to TOS
     # -- no-eff-email: no electronic frontier foundation  sharing of email
-    command: certonly --webroot --webroot-path=/var/www/html --email admin@retronexus.net --agree-tos --no-eff-email --staging -d www.retronexus.net -d retronexus.net
+    command: certonly --webroot --webroot-path=/var/www/html --email admin@retronexus.net --agree-tos --no-eff-email --force-renewal -d www.retronexus.net -d retronexus.net
 
 volumes:
   dbdata:
