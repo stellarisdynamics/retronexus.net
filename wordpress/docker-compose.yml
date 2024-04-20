@@ -1,14 +1,26 @@
 services:
   database:
-    image: mysql:latest
-    container_name: database
+    image: mysql:latest # latest mysql image
+    container_name: database # container name
+    restart: unless-stopped # restart policy
+    env_file: .env # adding env variables in the buold context
+    environment: # add environment vars beyond .env
+      - MYSQL_DATABASE=wordpress # set database name
+    volumes:
+      - dbdata:/var/lib/mysql # container directory
+    command: '--default-authentication-plugin=caching_sha2_password' # override the default CMD for the image. Add option to docker which starts the MYSQL server on the container. Set auth mechanism
+    networks: # set network
+      - app-network
+
+  wordpress:
+    depends_on:
+      - database
+    image: wordpress:6.5.2-fpm-alpine
+    container_name: wordpress
     restart: unless-stopped
     env_file: .env
-    environment:
-      - MYSQL_DATABASE=wordpress
     volumes:
-      - dbdata:/var/lib/mysql
-    command: '--default-authentication-plugin=caching_sha2_password'
+      - wordpress:/var/www/html
     networks:
       - app-network
 
